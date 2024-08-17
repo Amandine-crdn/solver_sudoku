@@ -1,43 +1,16 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "step_check.hpp"
 
-using namespace std;
-
-struct s_grid {
-    vector<vector<int>> grid = vector<vector<int>>(9, vector<int>(9, 0));
-    vector<vector<int>>::iterator itb_row = grid.begin();
-    vector<vector<int>>::iterator ite_row = grid.end();
-
-} t_grid;
-
-int valid_row() {
-    for (t_grid.itb_row; t_grid.itb_row != t_grid.ite_row; t_grid.itb_row++) {
-        vector<int>::iterator vb = t_grid.itb_row->begin();
-        vector<int>::iterator ve = t_grid.itb_row->end();
-        for (vb; vb != ve; vb++) {
-            cout << *vb << " ";
-        }
-        cout << endl;
-    }
-    return 0;
-
-}
-
-int valid_column() {
-    return 0;
-    
-}
+Grid t_grid; 
 
 int check_up() {
-    if (valid_row() || valid_column() != 0)
+    if (check_all_rows() || check_all_columns() != 0)
         return -1;    
     return 0;
 }
 
 int read_grille(ifstream &fichier) {
-    
+    vector<Vector> &grid = t_grid.get_grid();
+
     string str;
     int row = 0;
     while (getline(fichier, str)) {
@@ -47,14 +20,16 @@ int read_grille(ifstream &fichier) {
             return -1;
         }
         for (int i = 0; i != len_row; i++) {
-            if (str[i] < 48 || str[i] > 57) {
-                cerr << "Error read: invalid number (" << str[i] << ")" << endl; 
+            char ascii = str[i];
+            if (ascii < 48 || ascii > 57) {
+                cerr << "Error read: invalid number (" << ascii << ")" << endl; 
                 return -1;
             }
-            t_grid.grid[row][i] = str[i] - '0';
+            t_grid.set_grid(row, i, ascii);
         }
         row++;
     }
+
 
     for (t_grid.itb_row; t_grid.itb_row != t_grid.ite_row; t_grid.itb_row++) {
         vector<int>::iterator vb = t_grid.itb_row->begin();
@@ -69,7 +44,7 @@ int read_grille(ifstream &fichier) {
 }
 
 int main(int argc, char **argv) {
-
+    
     ifstream fichier("grille_facile.txt");
     
     if (!fichier.is_open()) {
