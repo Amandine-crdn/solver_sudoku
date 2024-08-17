@@ -30,16 +30,27 @@
                 this->grid[row][i] = ascii - '0';
             }
 
+
             vector<Vector>::iterator get_begin() { return this->grid.begin(); }
             vector<Vector>::iterator get_end() { return this->grid.end(); }
             
+            //constructeur par defaut
+            Grid() :
+                grid(vector<Vector>(9, Vector(9, 0))),
+                itb_row(this->grid.begin()),
+                ite_row(this->grid.end())
+            {}
 
-        //constructeur par defaut
-        Grid() :
-            grid(vector<Vector>(9, Vector(9, 0))),
-            itb_row(this->grid.begin()),
-            ite_row(this->grid.end())
-        {}
+            void print_sudoku() {
+                for (itb_row = grid.begin(); itb_row != grid.end(); itb_row++) {
+                    vector<int>::iterator vb = itb_row->begin();
+                    vector<int>::iterator ve = itb_row->end();
+                    for (vb; vb != ve; vb++) {
+                        cout << *vb << " ";
+                    }
+                    cout << endl;
+                }
+            }
 
     };
 
@@ -47,7 +58,7 @@
 
     int check_all_columns();
     int check_all_rows();
-
+    int solve_sudoku();
 
 #endif
 

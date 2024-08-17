@@ -30,18 +30,13 @@ int read_grille(ifstream &fichier) {
         row++;
     }
 
-
-    for (t_grid.itb_row; t_grid.itb_row != t_grid.ite_row; t_grid.itb_row++) {
-        vector<int>::iterator vb = t_grid.itb_row->begin();
-        vector<int>::iterator ve = t_grid.itb_row->end();
-        for (vb; vb != ve; vb++) {
-            cout << *vb << " ";
-        }
-        cout << endl;
-    }
-
+    cout << "START" << endl;
+    t_grid.print_sudoku();
+    
     return 0;
 }
+
+
 
 int main(int argc, char **argv) {
     
@@ -54,7 +49,11 @@ int main(int argc, char **argv) {
     if ((read_grille(fichier) || check_up()) != 0) {
         return -1;
     }
-  
+
+    solve_sudoku();
+
+    cout << "\nEND GAME" << endl;
+    t_grid.print_sudoku();
 
     
 
