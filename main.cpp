@@ -2,14 +2,9 @@
 
 Grid t_grid; 
 
-int check_up() {
-    if (check_all_rows() || check_all_columns() != 0)
-        return -1;    
-    return 0;
-}
 
-int read_grille(ifstream &fichier) {
-    vector<Vector> &grid = t_grid.get_grid();
+int read_grid(ifstream &fichier) {
+    vector<vector<int>> &grid = t_grid.get_grid();
 
     string str;
     int row = 0;
@@ -46,7 +41,7 @@ int main(int argc, char **argv) {
         cerr << "Error: can't open file" << endl;
         return -1;
     }
-    if ((read_grille(fichier) || check_up()) != 0) {
+    if ((read_grid(fichier) || check_up()) != 0) {
         return -1;
     }
 

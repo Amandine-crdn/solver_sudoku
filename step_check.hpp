@@ -10,19 +10,16 @@
     #include <set>
 
     using namespace std;
-    using Vector = vector<int>;
-    using Iterator = Vector::iterator;
-
 
     class Grid {
 
         public:
-            vector<Vector> grid;
-            vector<Vector>::iterator itb_row;
-            vector<Vector>::iterator ite_row;
+            vector<vector<int>> grid;
+            vector<vector<int>>::iterator itb_row;
+            vector<vector<int>>::iterator ite_row;
 
             //getter
-            vector<Vector> &get_grid() { return this->grid; }
+            vector<vector<int>> &get_grid() { return this->grid; }
             
 
             //setter
@@ -31,12 +28,12 @@
             }
 
 
-            vector<Vector>::iterator get_begin() { return this->grid.begin(); }
-            vector<Vector>::iterator get_end() { return this->grid.end(); }
+            vector<vector<int>>::iterator get_begin() { return this->grid.begin(); }
+            vector<vector<int>>::iterator get_end() { return this->grid.end(); }
             
             //constructeur par defaut
             Grid() :
-                grid(vector<Vector>(9, Vector(9, 0))),
+                grid(vector<vector<int>>(9, vector<int>(9, 0))),
                 itb_row(this->grid.begin()),
                 ite_row(this->grid.end())
             {}
@@ -55,9 +52,8 @@
     };
 
     extern Grid t_grid; 
-
-    int check_all_columns();
-    int check_all_rows();
+    
+    int check_up();
     int solve_sudoku();
 
 #endif

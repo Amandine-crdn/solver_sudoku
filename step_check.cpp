@@ -1,68 +1,57 @@
 #include "step_check.hpp"
 
-int valid_row(vector<Vector>::iterator &vi) {
-    Iterator itb = vi->begin();
-    Iterator ite = vi->end();
+int valid_carre() {
+    
+}
+
+int valid_row(vector<vector<int>>::iterator &vi) {
+    vector<int>::iterator itb = vi->begin();
+    vector<int>::iterator ite = vi->end();
     int number = 0;
-    Iterator iterator_temp;
+
+    set<int> unique_values;
+    pair<set<int>::iterator,bool> ret;
 
     for (itb; itb != ite; itb++) {
         number = *itb;
-        iterator_temp = itb;
-        if (number != 0) {
-            for (iterator_temp; iterator_temp != ite; iterator_temp++) {
-                if (iterator_temp != itb && *iterator_temp == number) {
-                    cerr << "Error: duplicate number (" << number << ")" << endl;
-                    return -1;
-                }
-            }
-        }
-    }
-    return 0;
-}
-
-int check_all_rows() {
-    //reinitialiser les iterator de grid
-    
-    t_grid.itb_row = t_grid.get_grid().begin();
-    t_grid.ite_row = t_grid.get_grid().end();
-
-    for (t_grid.itb_row; t_grid.itb_row != t_grid.ite_row; t_grid.itb_row++) {
-        if (valid_row(t_grid.itb_row) != 0) {
+        ret = unique_values.insert(number);
+        if (number != 0 && ret.second == false)  {
+            cerr << "Error: duplicate number inside row (" << number << ")" << endl;
             return -1;
+
         }
     }
+    unique_values.clear();
     return 0;
 }
 
-int valid_column(int count, vector<Vector>::iterator &vector_iterator) {
-
+int valid_column(int count) {
     int number = 0;
+    vector<vector<int>>::iterator start = t_grid.get_begin();
     set<int> unique_values;
-    vector<Vector>::iterator start = t_grid.get_begin();
     pair<set<int>::iterator,bool> ret;
     
-    number = (*start)[count];
     for (int i = 0; i < 9; i++) {
-        ret = unique_values.insert((*(start + i))[count]);
-        if ((*(start + i))[count] != 0 && ret.second == false)  {
-                cerr << "Error: duplicate number (" << number << ")" << endl;
+        number = (*(start + i))[count];
+        ret = unique_values.insert(number);
+        if (number != 0 && ret.second == false)  {
+            cerr << "Error: duplicate number inside column (" << number << ")" << endl;
+            return -1;
 
         }
     }
 
     unique_values.clear();
-    return 0;
-    
+    return 0;   
 }
-int check_all_columns() {
-    vector<Vector>::iterator itb, ite;
+
+int check_up() {
+    vector<vector<int>>::iterator itb, ite;
     itb = t_grid.get_begin();
     ite = t_grid.get_end();
 
-    // for (int i = 0; i < 9; i++) {
     for (int i = 0; itb != ite; itb++, i++) {
-        if (valid_column(i, itb) != 0) {
+        if (valid_column(i) != 0 || valid_row(itb) != 0) {
             return -1;
         }
     }
