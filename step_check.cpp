@@ -44,32 +44,31 @@ int valid_column(int count) {
 }
 
 int valid_carre() {
-    // Créer "9 lignes avec 9 carrés et envoyer à check_row"
+    // Créer "9 lignes" avec 9 carrés
     Grid temp;
 
-    int carre = 0; // Compteur pour les carrés
     int update_col = 0;
     int update_row = 0; // Ligne de départ
     int col_temp = 0;
 
-    while (carre < 9) { // Faire pour les 9 carrés
-        // Création d'une ligne grâce à un carré
+    for (int carre = 0; carre < 9;) {
         col_temp = 0;
         for (int row = update_row; row < update_row + 3 ; row++) { // Parcourt 3 lignes
             for (int col = update_col; col < update_col + 3; col++) { // Parcourt 3 colonnes
-                temp.setter(carre, col_temp, t_grid.get_grid()[row][col]); // Valeur
+                temp.setter(carre, col_temp, t_grid.get_grid()[row][col]); // reassemblage
                 col_temp++;
             }
         }
-
         carre++;
-        update_col +=3;
-
+        
         if (carre % 3 == 0) {
             update_row += 3;
             update_col = 0;
         }
-        
+        else {
+            update_col +=3;
+        }
+    
     }
 
     vector<vector<int>>::iterator itb, ite;
@@ -78,7 +77,6 @@ int valid_carre() {
 
     for (int i = 0; itb != ite; itb++, i++) {
         if (valid_row(itb, "Error: duplicate number inside carre (") != 0) {
-
             return -1;
         }
     }
@@ -96,7 +94,6 @@ int check_up() {
             return -1;
         }
     }
-    int a = valid_carre();
-    return 0;
+    return valid_carre();
 }
 
