@@ -23,8 +23,12 @@
             
 
             //setter
-            void set_grid(int row, int i, char ascii) { 
-                this->grid[row][i] = ascii - '0';
+            void set_grid(int row, int col, char value) { 
+                this->grid[row][col] = value - '0';
+            }
+
+            void setter(int row, int col, int value) { 
+                this->grid[row][col] = value;
             }
 
 
